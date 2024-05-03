@@ -47,12 +47,13 @@ def u2_t(t, t_period, t_zero):
 def winkel_u1_u2(t_zero_array, t_period):
     winkel = []
     for i in t_zero_array:
-        winkel.append((-2*np.divide(np.pi, t_period)*i)*np.divide(360, 2*np.pi))
+        x = np.divide(2*i*np.pi, t_period)
+        winkel.append(np.arccos(np.sin(x)/(2*np.pi)+np.cos(x)-i/t_period*np.cos(x)))
     return np.array(winkel)
 
 
 time_start = -5
-time_stop = 20
+time_stop = 25
 time_steps = 150
 t_per = 10
 time_span = np.linspace(time_start, time_stop, time_steps)
@@ -77,48 +78,48 @@ phie = winkel_u1_u2(t_0_array, t_per)
 # Plot d
 # plt.plot(t_0_array, phie, 'r-', label=r'$\varphi(T_0)$')
 # plt.xlim(0, t_per)
-# plt.ylim(0, -360)
+# plt.ylim(0, numpy.amax(phie) + 0.2)
 # plt.title(r'Winkel zwischen $u_1(t)$ und $u_2(t)$')
-# plt.ylabel(r'$\varphi(T_0)$ in degrees')
+# plt.ylabel(r'$\varphi(T_0)$ in rad')
 # plt.xlabel(r'$T_0$ in seconds')
-# plt.axhline(y=-90, color='y', linestyle='--', label="-90 degrees")
-# plt.axhline(y=-270, color='g', linestyle='--', label="-270 degrees")
+# plt.axhline(y=np.pi/2, color='y', linestyle='--', label="90 degrees")
 
-# Plot h1
-t_0 = 5
+
+# # Plot h1
+# t_0 = 5
+# u1 = u1_t(time_span, t_per)
+# u2 = u2_t(time_span, t_per, t_0)
+# plt.plot(time_span, u1, 'r-', label=r'$u_1(t)$')
+# plt.plot(time_span, u2, 'b--', label=r'$u_2(t)$')
+# plt.title(r'Plot der Signale mit maximaler Distanz zueinander')
+# plt.ylabel(r'$u_1(t)$ und $u_2(t)$ in [sqrt($E_b / T$)]')
+# plt.xlabel(r't in seconds')
+# plt.xlim(time_start, time_stop)
+# plt.ylim(numpy.amax(u1) + 0.1, numpy.amin(u1) - 0.1)
+
+#  Plot h21
+# t_0 = 2.849
+# u1 = u1_t(time_span, t_per)
+# u2 = u2_t(time_span, t_per, t_0)
+# plt.plot(time_span, u1, 'r-', label=r'$u_1(t)$')
+# plt.plot(time_span, u2, 'b--', label=r'$u_2(t)$')
+# plt.title(r'Plot der orthogonalen Signale $T_0 = 0.2849T$')
+# plt.ylabel(r'$u_1(t)$ und $u_2(t)$ in [sqrt($E_b / T$)]')
+# plt.xlabel(r't in seconds')
+# plt.xlim(time_start, time_stop)
+# plt.ylim(numpy.amax(u1) + 0.1, numpy.amin(u1) - 0.1)
+
+# Plot h22
+t_0 = 10
 u1 = u1_t(time_span, t_per)
 u2 = u2_t(time_span, t_per, t_0)
 plt.plot(time_span, u1, 'r-', label=r'$u_1(t)$')
 plt.plot(time_span, u2, 'b--', label=r'$u_2(t)$')
-plt.title(r'Plot der Signale mit maximaler Distanz zueinander')
+plt.title(r'Plot der orthogonalen Signale $T_0 = T$')
 plt.ylabel(r'$u_1(t)$ und $u_2(t)$ in [sqrt($E_b / T$)]')
 plt.xlabel(r't in seconds')
 plt.xlim(time_start, time_stop)
 plt.ylim(numpy.amax(u1) + 0.1, numpy.amin(u1) - 0.1)
-
-# #  Plot h21
-# t_0 = 2.5
-# u1 = u1_t(time_span, t_per)
-# u2 = u2_t(time_span, t_per, t_0)
-# plt.plot(time_span, u1, 'r-', label=r'$u_1(t)$')
-# plt.plot(time_span, u2, 'b--', label=r'$u_2(t)$')
-# plt.title(r'Plot der orthogonalen Signale $T_0 = \frac{T}{4}$')
-# plt.ylabel(r'$u_1(t)$ und $u_2(t)$ in [sqrt($E_b / T$)]')
-# plt.xlabel(r't in seconds')
-# plt.xlim(time_start, time_stop)
-# plt.ylim(numpy.amax(u1) + 0.1, numpy.amin(u1) - 0.1)
-
-# # Plot h22
-# t_0 = 7.5
-# u1 = u1_t(time_span, t_per)
-# u2 = u2_t(time_span, t_per, t_0)
-# plt.plot(time_span, u1, 'r-', label=r'$u_1(t)$')
-# plt.plot(time_span, u2, 'b--', label=r'$u_2(t)$')
-# plt.title(r'Plot der orthogonalen Signale $T_0 = \frac{3T}{4}$')
-# plt.ylabel(r'$u_1(t)$ und $u_2(t)$ in [sqrt($E_b / T$)]')
-# plt.xlabel(r't in seconds')
-# plt.xlim(time_start, time_stop)
-# plt.ylim(numpy.amax(u1) + 0.1, numpy.amin(u1) - 0.1)
 
 plt.legend(fontsize=8)
 plt.grid()
