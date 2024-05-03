@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import convolve
 
+# 1.4.a:
 # Definieren der Funktionen x(t) und h(t)
 def x(t, T):
     return np.where(np.abs(t) <= T/2, 1, 0)
@@ -40,12 +41,13 @@ plt.xlim([-T, T])
 plt.tight_layout()
 plt.show()
 
+# 1.4.b/c/d:
 # Definition der Abtastfrequenz und der Anzahl von Samples
 sample_rate = 100
 num_samples = 500
 T = sample_rate
 
-# Erzeugung einer Rechteckwelle (Signal) mit einem Impuls zwischen 2*sample_rate und 3*sample_rate
+# Erzeugung einer Rechteckwelle
 wave = np.fromfunction(lambda i: (2 * sample_rate < i) & (i < 3 * sample_rate), (num_samples,)).astype(np.cfloat)
 
 # Anzahl der Faltungen
@@ -71,13 +73,8 @@ shifted_x = x - x[max_index]
 # Plotten der gefalteten Welle mit verschobenen x-Werten
 plt.figure(figsize=(10, 6))
 plt.plot(shifted_x, waves[-1],)
-plt.legend()
 plt.grid()
 plt.xlabel('Zeit t')
 plt.xticks([-T, 0, T], ['-T', '0', '+T'])
 plt.title('$y_{10}(t)$')
 plt.show()
-
-
-
-
